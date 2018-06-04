@@ -1,0 +1,42 @@
+#:kivy 1.10.0
+
+#:import MDLabel kivymd.label.MDLabel
+#:import MDRaisedButton kivymd.button.MDRaisedButton
+
+<BugReporter>:
+    canvas.before:
+        Color:
+            rgb: app.theme_cls.bg_light
+        Rectangle:
+            size: root.size
+
+    MDLabel:
+        text: root.heading
+        halign: "center"
+        font_style: "Headline"
+        theme_text_color: "Primary"
+        size_hint_y: None
+        pos_hint: {"top": 1}
+
+    MDLabel:
+        text: root.subheading
+        halign: "center"
+        font_style: "Subhead"
+        theme_text_color: "Secondary"
+        size_hint_y: None
+        pos_hint: {"top": .95}
+
+    Image:
+        source: "/Users/anatoly/Desktop/EasyGrow/Data/Images/bug.png"
+        size_hint: .9, .9
+        pos_hint: {"center_x": .5, "center_y": .5}
+
+    MDRaisedButton:
+        text: root.exit_button_text
+        pos_hint: {"center_x": .25, "top": .15}
+        on_release: if callable(root.exit_callback): root.exit_callback()
+
+    MDRaisedButton:
+        text: root.report_button_text
+        pos_hint: {"center_x": .75, "top": .15}
+        on_release: if callable(root.report_callback): root.report_callback()

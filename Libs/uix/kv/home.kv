@@ -1,0 +1,112 @@
+#:kivy 1.10.0
+
+#:import MDList kivymd.list.MDList
+#:import MDCard kivymd.card.MDCard
+#:import Toolbar kivymd.toolbar.Toolbar
+#:import MDSeparator kivymd.card.MDSeparator
+#:import MDSwitch kivymd.selectioncontrols.MDSwitch
+#:import MDRaisedButton kivymd.button.MDRaisedButton
+#:import OneLineListItem kivymd.list.OneLineListItem
+
+
+<Card@MDCard>:
+	elevation: 0
+	size_hint: .93, .275
+	border_radius: 15
+
+
+<ListItem@OneLineListItem>:
+	divider: None
+
+
+<HomeScreen>:
+	canvas.before:
+		Color:
+			rgb: .94, .941, .942, 1
+		Rectangle:
+			size: root.size
+
+	Toolbar:
+		title: "Smart Lamp"
+		pos_hint: {"center_x": .5, "top": 1}
+		md_bg_color: 255, 255, 255, 1
+		background_palette: "Primary"
+		background_hue: "100"
+		specific_text_color: .14, .16, .179, .7
+		right_action_items: [["settings", lambda x: None]]
+
+	Card:
+		pos_hint: {"center_x": .5, "top": .87}
+
+	Card:
+		pos_hint: {"center_x": .5, "top": .58}
+		BoxLayout:
+			orientation: "vertical"
+			padding: dp(8)
+			MDLabel:
+				text: "Состояние лампы"
+				theme_text_color: "Secondary"
+				font_style: "Subhead"
+				size_hint_y: None
+				height: self.texture_size[1]
+			BoxLayout:
+				orientation: "horizontal"
+				MDLabel:
+					text: "Свет"
+					theme_text_color: "Secondary"
+					font_style: "Caption"
+					size_hint_y: None
+					height: self.texture_size[1]
+				MDSwitch:
+					active: False
+			MDSeparator:
+				height: dp(8)
+			BoxLayout:
+				orientation: "horizontal"
+				MDLabel:
+					text: "Полив"
+					theme_text_color: "Secondary"
+					font_style: "Caption"
+					size_hint_y: None
+					height: self.texture_size[1]
+				MDRaisedButton:
+					text: "Полить"
+
+	Card:
+		pos_hint: {"center_x": .5, "top": .29}
+		BoxLayout:
+			orientation: "vertical"
+			padding: dp(8)
+			MDLabel:
+				text: "Бортовой журнал"
+				theme_text_color: "Secondary"
+				font_style: "Subhead"
+				size_hint_y: None
+				height: self.texture_size[1]				
+			ScrollView:
+				do_scroll_x: False
+				MDList:
+					ListItem:
+						text: "15:00  System turned on"
+					ListItem:
+						text: "15:05  Watering system turned on"
+					ListItem:
+						text: "15:10  Lights turned on"
+					ListItem:
+						text: "15:15  Set new timers schedule"
+					ListItem:
+						text: "15:20  Get temperature and humidity"
+					ListItem:
+						text: "15:25  Get current time"
+					ListItem:
+						text: "15:30  Turn off light #1"
+					ListItem:
+						text: "15:35  Turn on #light #1"
+					ListItem:
+						text: "15:40  Chage Wi-Fi settings"
+					ListItem:
+						text: "15:45  System analize"
+					ListItem:
+						text: "15:50  Watering system turned off"
+					ListItem:
+						text: "15:55  System turned off"

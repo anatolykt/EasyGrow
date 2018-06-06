@@ -1,12 +1,48 @@
 #:kivy 1.10.0
 
-#:import MDList kivymd.list.MDList
 #:import MDCard kivymd.card.MDCard
-#:import Toolbar kivymd.toolbar.Toolbar
-#:import MDSeparator kivymd.card.MDSeparator
 #:import MDSwitch kivymd.selectioncontrols.MDSwitch
+#:import MDSeparator kivymd.card.MDSeparator
+#:import MDIconButton kivymd.button.MDIconButton
 #:import MDRaisedButton kivymd.button.MDRaisedButton
+#:import MDList kivymd.list.MDList
 #:import OneLineListItem kivymd.list.OneLineListItem
+
+
+<Toolbar>:
+	canvas.before:
+		Color:
+			rgb: 255, 255, 255, 1
+		Rectangle:
+			pos: self.pos
+			size: self.size
+
+	MDLabel:
+		text: root.title
+		bold: True
+		halign: "center"
+		text_color: root.title_color
+		font_style: "Subhead"
+		theme_text_color: "Custom"
+		size_hint_y: None
+		height: self.texture_size[1]
+		pos_hint: {"center_y": .5}
+
+	MDIconButton:
+		icon: root.button_icon
+		opposite_colors: True
+		text_color: root.button_color
+		theme_text_color: "Custom"
+		pos_hint: {"right": .95, "center_y": .5}
+		on_release: if callable(root.button_callback): root.button_callback()
+
+	Image:
+		source: "Data/Images/line-gradient.png"
+		keep_ratio: False
+		allow_stretch: True
+		size_hint_y: None
+		height: dp(3)
+		pos_hint: {"top": 0}
 
 
 <Card@MDCard>:
@@ -15,8 +51,28 @@
 	border_radius: 15
 
 
-<ListItem@OneLineListItem>:
-	divider: None
+<Container@BoxLayout>:
+	orientation: "vertical"
+	padding: 10
+
+
+<CTitle@MDLabel>:
+	font_style: "Body1"
+	text_color: .17, .17, .17, 1
+	theme_text_color: "Custom"
+	size_hint_y: None
+	height: self.texture_size[1]
+
+
+<Row@BoxLayout>:
+	orientation: "horizontal"
+
+
+<CSwitch@MDSwitch>:
+	thumb_color: .16078431372549018, .4392156862745098, .4392156862745098, 1
+	thumb_color_down: .16078431372549018, .4392156862745098, .4392156862745098, 1
+	_track_color_normal: .9058823529411765, .9058823529411765, .9058823529411765, 1
+	_track_color_active: .7921568627450981, .9176470588235294, .8509803921568627, 1
 
 
 <HomeScreen>:
@@ -27,86 +83,127 @@
 			size: root.size
 
 	Toolbar:
-		title: "Smart Lamp"
-		pos_hint: {"center_x": .5, "top": 1}
-		md_bg_color: 255, 255, 255, 1
-		background_palette: "Primary"
-		background_hue: "100"
-		specific_text_color: .14, .16, .179, .7
-		right_action_items: [["settings", lambda x: None]]
+		size_hint_y: None
+		height: dp(48)
+		pos_hint: {"top": 1}
 
 	Card:
-		pos_hint: {"center_x": .5, "top": .87}
+		pos_hint: {"center_x": .5, "top": .89}
+		Container:
+			CTitle:
+				text: "Основные показатели"
+			Row:
+				padding: 25, 0
+				spacing: 25
+				Image:
+					source: "Data/Images/humidity.png"
+					size_hint_x: .8
+					allow_stretch: True
+				Image:
+					source: "Data/Images/temperature.png"
+					allow_stretch: True
 
 	Card:
-		pos_hint: {"center_x": .5, "top": .58}
-		BoxLayout:
-			orientation: "vertical"
-			padding: dp(8)
-			MDLabel:
+		pos_hint: {"center_x": .5, "top": .6}
+		Container:
+			CTitle:
 				text: "Состояние лампы"
-				theme_text_color: "Secondary"
-				font_style: "Subhead"
-				size_hint_y: None
-				height: self.texture_size[1]
-			BoxLayout:
-				orientation: "horizontal"
+			Row:
+				padding: 15, 10
 				MDLabel:
 					text: "Свет"
-					theme_text_color: "Secondary"
 					font_style: "Caption"
+					theme_text_color: "Secondary"
+					size_hint_y: None
+					height: dp(28)
+				CSwitch:
+					_active: False
+					size_hint: None, None
+					size: dp(36), dp(28)
+			Row:
+				padding: 15, 10
+				MDLabel:
+					text: "Активный таймер"
+					font_style: "Caption"
+					theme_text_color: "Secondary"
 					size_hint_y: None
 					height: self.texture_size[1]
-				MDSwitch:
-					active: False
-			MDSeparator:
-				height: dp(8)
-			BoxLayout:
-				orientation: "horizontal"
+				MDLabel:
+					text: "Цветение"
+					halign: "right"
+					font_style: "Caption"
+					theme_text_color: "Secondary"
+					size_hint_y: None
+					height: self.texture_size[1]
+			Row:
+				padding: 15, 10
 				MDLabel:
 					text: "Полив"
-					theme_text_color: "Secondary"
 					font_style: "Caption"
+					theme_text_color: "Secondary"
 					size_hint_y: None
-					height: self.texture_size[1]
+					height: dp(28)
 				MDRaisedButton:
 					text: "Полить"
-
+					size_hint: None, None
+					size: dp(28), dp(28)
+                    opposite_colors: True
+                    md_bg_color: 0.16078431372549018, 0.4392156862745098, 0.4392156862745098, 1
 	Card:
-		pos_hint: {"center_x": .5, "top": .29}
-		BoxLayout:
-			orientation: "vertical"
-			padding: dp(8)
-			MDLabel:
+		size_hint_y: .29
+		pos_hint: {"center_x": .5, "top": .31}
+		Container:
+			CTitle:
 				text: "Бортовой журнал"
-				theme_text_color: "Secondary"
-				font_style: "Subhead"
-				size_hint_y: None
-				height: self.texture_size[1]				
-			ScrollView:
-				do_scroll_x: False
-				MDList:
-					ListItem:
-						text: "15:00  System turned on"
-					ListItem:
-						text: "15:05  Watering system turned on"
-					ListItem:
-						text: "15:10  Lights turned on"
-					ListItem:
-						text: "15:15  Set new timers schedule"
-					ListItem:
-						text: "15:20  Get temperature and humidity"
-					ListItem:
-						text: "15:25  Get current time"
-					ListItem:
-						text: "15:30  Turn off light #1"
-					ListItem:
-						text: "15:35  Turn on #light #1"
-					ListItem:
-						text: "15:40  Chage Wi-Fi settings"
-					ListItem:
-						text: "15:45  System analize"
-					ListItem:
-						text: "15:50  Watering system turned off"
-					ListItem:
-						text: "15:55  System turned off"
+			Row:
+				padding: 0, 15, 0, 0
+				ScrollView:
+					MDList:
+						OneLineListItem:
+							divider: None
+							text: "01.01.2017 15:00  Voga on"
+						OneLineListItem:
+							divider: None
+							text: "01.01.2017 15:00  Voga on"
+						OneLineListItem:
+							divider: None
+							text: "01.01.2017 15:00  Voga on"
+						OneLineListItem:
+							divider: None
+							text: "01.01.2017 15:00  Voga on"
+						OneLineListItem:
+							divider: None
+							text: "01.01.2017 15:00  Voga on"
+						OneLineListItem:
+							divider: None
+							text: "01.01.2017 15:00  Voga on"
+						OneLineListItem:
+							divider: None
+							text: "01.01.2017 15:00  Voga on"
+						OneLineListItem:
+							divider: None
+							text: "01.01.2017 15:00  Voga on"
+						OneLineListItem:
+							divider: None
+							text: "01.01.2017 15:00  Voga on"
+						OneLineListItem:
+							divider: None
+							text: "01.01.2017 15:00  Voga on"
+						OneLineListItem:
+							divider: None
+							text: "01.01.2017 15:00  Voga on"
+						OneLineListItem:
+							divider: None
+							text: "01.01.2017 15:00  Voga on"
+						OneLineListItem:
+							divider: None
+							text: "01.01.2017 15:00  Voga on"
+						OneLineListItem:
+							divider: None
+							text: "01.01.2017 15:00  Voga on"
+						OneLineListItem:
+							divider: None
+							text: "01.01.2017 15:00  Voga on"
+						OneLineListItem:
+							divider: None
+							text: "01.01.2017 15:00  Voga on"

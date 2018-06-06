@@ -10,3 +10,5 @@ class Program(App):
 
 	def build(self):
 		return HomeScreen()
+
+Program().run()
